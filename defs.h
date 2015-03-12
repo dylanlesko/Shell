@@ -3,6 +3,9 @@
 
 #include "types.h"
 
+#define MAKE_RED "\e[31m"
+#define RESET_FORMAT "\e[m"
+
 /* shell.c */
 int 
 	fakeShell		( 										
@@ -23,5 +26,8 @@ stringStructPtr
 	);
 
 
+/* isstdio.c */
+	int is_std_i();
+	int is_std_o();
 
 #endif

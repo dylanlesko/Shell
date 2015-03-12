@@ -4,57 +4,84 @@
 #include "defs.h"
 #include "types.h"
 
-int showprompt = true;
+#define MEM_MAX ( ( size_t ) 2048 )
 
+boolean show_prompt = true;
+char dir_home[ MEM_MAX ];
+char dir_cur[ MEM_MAX ];
+char prompt[ 2 ];
+
+/* */
 int main()
 {
-	LList **argsLL = (LList**)malloc(sizeof(LList));
-	//shell_tok( "hi", argsLL);
-	fakeShell();
+	LList **argsLL = ( LList** )malloc( sizeof( LList ) );
 	
-	
-
-	
-	
-}
-
-int fakeShell()
-{
-	char fakeDir[2048];
-	char homedir[2048];
-	char cmdArgs[2048];
-	
-	LList **argsLL = (LList**)malloc(sizeof(LList));
-	
-	char prompt[2] = "$ ";
-	strcpy(homedir, getenv("HOME"));
-	strcpy(fakeDir, homedir);
-	
-	while( showprompt )
+	if ( (shell_init( ) ) == 0 )
 	{
-		fputs(fakeDir, stdout);
-		fputs(prompt, stdout);
-		fgets(cmdArgs, sizeof(cmdArgs), stdin);
-		
-		shell_tok( cmdArgs, argsLL );
-		//processSTDIO( cmdArgs,  argsLL);
-		//dumpArgs( *argsLL );
-		//free the argsLL here
+		shell_prompt();
 	}
+
+	exit( 0 );
 }
 
-int processSTDIO( char* args, LList **root )
+/* */
+int shell_init()
 {
-	//fragment args based off of quotations?
 	
-	char *tempToken;
-	tempToken = strtok(args, "| \'\"");	
-	while(tempToken != NULL)
+	if( is_std_i() == true )
 	{
-	//	insertArg( tempToken, root );
-		printf("token: %s\n", tempToken);
-		tempToken = strtok(NULL, "| \'\"");
+		show_prompt = true;
+		strcpy( prompt, "$: " );
+		strcpy( dir_home, getenv( "HOME" ) );
+		getcwd( dir_cur, MEM_MAX );
+		printf( "prompt: %s\nhome: %s\ncur: %s\n", prompt, dir_home, dir_cur );
+
+		return 0;
 	}
+	else
+	{
+		return 1;
+	}
+	return 1;
 }
 
+/* */
+int shell_prompt()
+{	
+	while( show_prompt == true )
+	{
+		fputs( dir_cur, stdout );
+		fputs( MAKE_RED, stdout );
+		fputs( prompt, stdout );
+		fputs( RESET_FORMAT, stdout );
 
+		if( ( shell_cmd_in() ) == 0 )
+			continue;
+		else
+			return 1;
+	}
+	return 0;
+}
+
+/* */
+int shell_cmd_in()
+{
+	char cmd_line[ MEM_MAX ];
+	memset( cmd_line, 0, MEM_MAX );
+
+	if ( fgets( cmd_line, MEM_MAX, stdin ) == NULL )
+	{
+		return 1;
+	}
+
+	cmd_line_format( cmd_line );
+
+	return 0;
+}
+
+/* */
+int cmd_line_format( char* cmd_line )
+{
+	fputs(cmd_line, stdout ) ;
+	shell_tok( cmd_line, NULL );
+}

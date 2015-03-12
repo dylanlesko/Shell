@@ -17,12 +17,7 @@
  */
  
 int shell_tok( char* args, LList** list )
-{
-	
-	/*
-	 * 	char *strpbrk(const char *str1, const char *str2)
-	 */
-	 
+{	 
 	if( args == NULL )
 	{
 		return 1;
@@ -31,34 +26,104 @@ int shell_tok( char* args, LList** list )
 	char *iter = args;
 	char token[2048];
 	int i = 0;
+	int offset = 0;
 	
-	
+	//printf("len: %zu\nlen: %zu", strlen(args), strlen(iter));
 	
 	while( *iter )
 	{
 		//printf("c: %c\n", *iter);
-		iter++;
 		if( (*iter) == '\"' )			/* match double quotes 		*/
 		{
+			iter++;
+			offset = shell_tok_dquote( iter );
+			if( offset == 0 )
+			{
+				printf("mismatch\n");
+			}
+			else
+			{
+				while( offset > 0 && *iter )
+				{
+					token[i] = (*iter);
+					iter++;
+					i++;
+					offset--;
+				}
+			}
+			offset = 0;
 		}
 		else if( (*iter) == '\'' )		/* match single quotes 		*/
 		{
+			iter++;
+			offset = shell_tok_squote( iter );
+			if( offset == 0 )
+			{
+				printf("mismatch\n");
+			}
+			else
+			{
+				while( offset > 0 && *iter )
+				{
+					token[i] = (*iter);
+					iter++;
+					i++;
+					offset--;
+				}
+			}
+			offset = 0;
 		}
 		else if( (*iter) == '|' )		/* token at pipe 			*/
 		{
-			printf("terminated\n");
 		}
-		else if( (*iter) == ' ' 
-			|| (*iter) == '\t' )		/* token at space or tab 	*/
+		else if( (*iter) == ' ' || (*iter) == '\t' )	/* token at space or tab 	*/
 		{
-			printf("terminated\n");
+			iter++;
+			continue;
 		}
 		else
 		{
 			token[i] = (*iter);
 		}
 		
+		iter++;
 		i++;
 	}
 
+}
+
+int shell_tok_dquote( char* cmd_line )
+{
+	char *iter = cmd_line;
+	int char_count = 0;
+
+	while( *iter )
+	{
+		char_count++;
+		if( ( *iter ) == '\"' )
+		{
+			return char_count;
+		}
+	
+					
+		iter++;
+	}
+	return 0;
+}
+
+int shell_tok_squote( char* cmd_line )
+{
+	char *iter = cmd_line;
+	int char_count = 0;
+
+	while( *iter )
+	{
+		char_count++;		
+		if( ( *iter ) == '\'' )
+		{
+			return char_count;
+		}
+		iter++;
+	}
+	return 0;
 }
