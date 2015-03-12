@@ -8,7 +8,7 @@ int showprompt = true;
 
 int main()
 {
-	//LList **argsLL = (LList**)malloc(sizeof(LList));
+	LList **argsLL = (LList**)malloc(sizeof(LList));
 	//shell_tok( "hi", argsLL);
 	fakeShell();
 	
