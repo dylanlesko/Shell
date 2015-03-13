@@ -10,20 +10,15 @@ typedef enum {
 
 
 
-
-/* */
-typedef struct AList
-{
-	char* argument;
-	struct AList *next;
-} AList;
-
 /* */
 typedef struct LList
 {
-	struct AList **arguments;
+	char command[2048];
+	char args[50][2048];
 	struct LList *next;
+
 } LList;
+
 
 /* */
 typedef char* stringStructPtr;

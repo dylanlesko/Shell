@@ -26,7 +26,9 @@ int shell_tok( char* args, LList** list )
 	char *iter = args;
 	char token[2048];
 	int i = 0;
+	int j = 0;
 	int offset = 0;
+	char fuck[50][2048];
 	
 	//printf("len: %zu\nlen: %zu", strlen(args), strlen(iter));
 	
@@ -43,16 +45,21 @@ int shell_tok( char* args, LList** list )
 			}
 			else
 			{
-				while( offset > 0 && *iter )
+				while( offset > 1 && *iter )
 				{
 					token[i] = (*iter);
 					iter++;
 					i++;
 					offset--;
 				}
+				iter++;
 			}
 			offset = 0;
-		}
+			printf("token: %s\n", token);
+			strcpy( fuck[j], token );
+			j++;
+			memset(token, 0, 2048);
+			i = 0;		}
 		else if( (*iter) == '\'' )		/* match single quotes 		*/
 		{
 			iter++;
@@ -63,32 +70,65 @@ int shell_tok( char* args, LList** list )
 			}
 			else
 			{
-				while( offset > 0 && *iter )
+				while( offset > 1 && *iter )
 				{
 					token[i] = (*iter);
 					iter++;
 					i++;
 					offset--;
 				}
+				iter++;
 			}
 			offset = 0;
+			printf("token: %s\n", token);
+			strcpy( fuck[j], token );
+			j++;
+			memset(token, 0, 2048);
+			i = 0;
 		}
 		else if( (*iter) == '|' )		/* token at pipe 			*/
 		{
+			if( i == 0)
+			{
+				iter ++;
+			}
+			else
+			{
+				iter++;
+				printf("token: %s\n", token);
+
+				//ins_node( fuck, list );
+
+				memset(token, 0, 2048);
+				i = 0;
+			}
 		}
 		else if( (*iter) == ' ' || (*iter) == '\t' )	/* token at space or tab 	*/
 		{
-			iter++;
-			continue;
+			if( i == 0)
+			{
+				iter++;
+			}
+			else
+			{
+				iter++;
+				printf("token: %s\n", token);
+				memset(token, 0, 2048);
+				i = 0;
+			}
 		}
 		else
 		{
 			token[i] = (*iter);
+			iter++;
+			i++;
 		}
 		
-		iter++;
-		i++;
+
+
+
 	}
+	printf("token: %s\n", token);
 
 }
 
