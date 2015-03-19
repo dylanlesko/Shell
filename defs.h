@@ -1,66 +1,108 @@
-#ifndef TYPES_H
+#ifndef HEADERS_H
 
-#define TYPES_H
-
-
+#define HEADERS_H
 
 
 
-/* */
+#include "types.h"
 
-typedef enum { 
-
-	false,
-
-	true
-
-} boolean;
+#include <stdlib.h>
 
 
 
 
 
+/* output formatting */
 
+#define MAKE_GREEN "\e[32m"
 
-/* */
+#define MAKE_RED "\e[31m"
 
-typedef struct LList
+#define MAKE_BLACK "\e[30m"
 
-{
+#define MAKE_YELLOW "\e[33m"
 
-	char command[2048];
+#define MAKE_BLUE "\e[34m"
 
-	char args[50][2048];
+#define MAKE_PURPLE "\e[35m"
 
-	int arg_count;
+#define MAKE_CYAN "\e[36m"
 
-	struct LList *next;
+#define MAKE_WHITE "\e[37m"
 
+#define MAKE_UNDERLINE "\e[4m"
 
-
-} LList;
-
-
-
-
-
-/* */
-
-typedef char* stringStructPtr;
+#define RESET_FORMAT "\e[m"
 
 
 
-/* */
 
-#define FREE(ptr) 	\
 
-do{ 				\
 
-free((ptr)); 		\
 
-(ptr)=NULL; 		\
+/* shell.c */
 
-}while(0) 
+void shell_exit( void );
+
+int shell_cmd_in( LList** list );
+
+int shell_prompt( LList** list );
+
+int shell_init();
+
+
+
+
+
+/* tok.c */
+
+int 
+
+	shell_tok		( char* args, 		LList** list 					
+
+	);
+
+int shell_tok_match_len( char* cmd_line, char match );
+
+
+
+
+
+/* list.c */
+
+stringStructPtr string_init ( char* string );
+
+
+
+
+
+
+
+
+
+/* isstdio.c */
+
+	int is_std_i();
+
+	int is_std_o();
+
+
+
+
+
+
+
+#define MEM_MAX ( ( size_t ) 2048 )
+
+
+
+extern boolean show_prompts;
+
+extern char dir_home[ MEM_MAX ];
+
+extern char dir_cur[ MEM_MAX ];
+
+extern char prompt[ 2 ];
 
 
 
