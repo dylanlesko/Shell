@@ -9,4 +9,4 @@ debug: main.c list.h list.c util.h util.c
 	gdb a.out
 
 clean:
-	rm main a.out
+	rm main

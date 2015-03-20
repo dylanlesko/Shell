@@ -4,125 +4,57 @@
 #include <stdlib.h>
 #include "list.h"
 
-void closeFDsingle(int fd, int pipes[][2], int pipeNum) {
 
-	int i, j;
-
-	for(i = 0; i < pipeNum; i++) {
-		for(j = 0; j < 2; j++) {
-			if(pipes[i][j] != fd)
-				close(pipes[i][j]);
-		}
-	}
-}
-
-void closeFDdouble(int one, int two, int pipes[][2], int pipeNum) {
-
-	int i, j;
-
-	for(i = 0; i < pipeNum; i++) {
-		for(j = 0; j < 2; j++) {
-			if((pipes[i][j] != one) && (pipes[i][j] != two))
-				close(pipes[i][j]);
-		}
-	}
-}
 
 int main() {
 
 	LL *first = (LL *)malloc(sizeof(LL));
 	LL *second = (LL *)malloc(sizeof(LL));
 	LL *third = (LL *)malloc(sizeof(LL));
+	LL *fourth = (LL *)malloc(sizeof(LL));
+	LL *fifth = (LL *)malloc(sizeof(LL));
+	LL *sixth = (LL *)malloc(sizeof(LL));
+	LL *seventh = (LL *)malloc(sizeof(LL));
+	LL *eighth = (LL *)malloc(sizeof(LL));
 
-	strcpy(first->command,"ls");
-	strcpy(first->args[0],"/home/nikhil/Downloads");
+	strcpy(first->command,"cat");
+	strcpy(first->args[0],"/home/nikhil/Documents/School/spring2015/os/homework/Shell/exec/moby.txt");
 	first->next = second;
 
 
-	strcpy(second->command,"grep");
-	strcpy(second->args[0],"e");
+	strcpy(second->command,"tr");
+	strcpy(second->args[0],"A-Z");
+	strcpy(second->args[1],"a-z");
 	second->next = third;
 
 		
-	strcpy(third->command,"sort");
-	strcpy(third->args[0],"-r");
-	third->next = NULL;
+	strcpy(third->command,"tr");
+	strcpy(third->args[0],"-C");
+	strcpy(third->args[1],"a-z");
+	strcpy(third->args[2],"\n");
+	third->next = fourth;
 	
+	strcpy(fourth->command,"sed");
+	strcpy(fourth->args[0],"/^$/d");
+	fourth->next = fifth;
+
+	strcpy(fifth->command,"sort");
+	fifth->next = sixth;
+
+	strcpy(sixth->command,"uniq");
+	strcpy(sixth->args[0],"-c");
+	sixth->next = seventh;
+
+	strcpy(seventh->command,"sort");
+	strcpy(seventh->args[0],"-nr");
+	seventh->next = eighth;
+
+	strcpy(eighth->command,"sed");
+	strcpy(eighth->args[0],"10q");
+	eighth->next = NULL;
 
 
-	
-	int status;
-	LL *cmd;
-	cmd = first;
-	pid_t pid;
-
-	// Create all the pipes first, then spawn all the children and assign the file descriptors
-
-	int pipeNum,listLen;
-	listLen = length(first);
-	pipeNum = listLen - 1;
-	int pipes[pipeNum][2];
-
-	int i;
-	for(i = 0; i < pipeNum; i++) 
-		pipe(pipes[i]);	
-	
-
-	for(i = 0; i < listLen; i++) {
-
-		//printf("i = %u\n",i);	
-		switch(pid = fork()) {
-
-			case 0:
-				if(i == 0) { // beginning
-					dup2(pipes[i][1],1);
-					closeFDsingle(pipes[i][1],pipes,pipeNum);
-					char *Args[51];
-					prepForExec(Args,cmd);
-					execvp(Args[0],Args);
-					perror(Args[0]);
-				} else if(i == pipeNum) { // end
-					dup2(pipes[i-1][0],0);
-					closeFDsingle(pipes[i-1][0],pipes,pipeNum);
-					char *Args[51];
-					prepForExec(Args,cmd);
-					execvp(Args[0],Args);
-					perror(Args[0]);
-				} else { // middle
-					dup2(pipes[i-1][0],0);
-					dup2(pipes[i][1],1);
-					closeFDdouble(pipes[i-1][0],pipes[i][1],pipes,pipeNum);
-					char *Args[51];
-					prepForExec(Args,cmd);
-					execvp(Args[0],Args);
-					perror(Args[0]);
-				}
-		
-			default:
-				if(i < pipeNum) {
-					close(pipes[i][1]); //close(pipes[i][0]);
-					cmd = cmd->next;
-				}
-				break;
-	
-			case -1:
-				perror("fork");
-				exit(1);
-		}
-	}
-
-
-
-
-
-
-//	printf("We get out of the for loop in the parent\n");
-
-
-	while((pid = wait(&status)) != -1){
-		int i;
-	}
-		//fprintf(stderr,"Process %d exits with %d\n",pid,WEXITSTATUS(status));
+	execute(first);
 
 	destroy(first);
 

@@ -1,5 +1,125 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "list.h"
+
+
+int length(LL *head) {
+
+	int count;
+	count = 0;
+	while(head != NULL) {
+		head = head->next;
+		count++;
+	}
+
+	return count;
+
+}
+
+
+void destroy(LL *head) {
+
+	LL *forward = head->next;
+
+	while(head != NULL) {
+		free(head);
+		head = forward;
+		if(forward == NULL)
+			forward = NULL;
+		else
+			forward = forward->next;
+	}
+}
+
+void print(LL *node) {
+
+	printf("%s\n",node->command);
+	
+	int i;
+	i = 0;
+	while((strcmp(node->args[i],"")) != 0) {
+		printf("%s\n",node->args[i]);		
+		i++;
+	}
+
+	printf("\n");
+
+}
+
+void printList(LL *head) {
+
+	while(head != NULL) {
+		print(head);
+		head = head->next;
+	}
+}
+
+#include <stdio.h>
+
+struct linkedList {
+        char command[2048];
+        char args[50][2048];
+        struct linkedList *next;
+};
+
+typedef struct linkedList LL;
+
+int length(LL *head);
+void destroy(LL *head);
+void print(LL *node);
+void printList(LL *head);
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include "list.h"
+
+
+
+int main() {
+
+	LL *first = (LL *)malloc(sizeof(LL));
+	//LL *second = (LL *)malloc(sizeof(LL));
+	//LL *third = (LL *)malloc(sizeof(LL));
+
+	strcpy(first->command,"cd");
+	strcpy(first->args[0],"/home/nikhil/Downloads");
+	first->next = NULL;
+
+/*
+	strcpy(second->command,"grep");
+	strcpy(second->args[0],"ou");
+	second->next = third;
+
+		
+	strcpy(third->command,"sort");
+	strcpy(third->args[0],"-r");
+	third->next = NULL;
+*/	
+
+	execute(first);
+
+	destroy(first);
+
+	return 0;
+}
+
+
+
+main: main.c list.h list.c util.h util.c
+	clear;
+	gcc -o main main.c list.h list.c util.h util.c
+
+
+debug: main.c list.h list.c util.h util.c
+	clear;
+	gcc -g main.c list.h list.c util.h util.c
+	gdb a.out
+
+clean:
+	rm main
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "list.h"
 
@@ -144,3 +264,11 @@ int builtIn(LL *cmd) {
 
 
 
+#include <stdio.h>
+#include "list.h"
+
+void prepForExec(char *Args[], LL *node);
+void closeFDsingle(int fd, int pipes[][2], int pipeNum);
+void closeFDdouble(int one, int two, int pipes[][2],int pipeNum);
+void execute(LL *head);
+int builtIn(LL *cmd);
