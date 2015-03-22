@@ -26,11 +26,11 @@ void shell_exit(void)
 int main()
 {
 	atexit(shell_exit);
-	LList **argsLL = ( LList** )malloc( sizeof( LList ) );
+	//LList **argsLL = ( LList** )malloc( sizeof( LList ) );
 
 	if ( (shell_init( ) ) == 0 )
 	{
-		shell_prompt( argsLL );
+		shell_prompt();
 	}
 
 	exit( 0 );
@@ -63,7 +63,7 @@ int shell_init()
 
 /* */
 
-int shell_prompt( LList** list )
+int shell_prompt()
 {	
 	while( show_prompt == true )
 	{
@@ -73,7 +73,9 @@ int shell_prompt( LList** list )
 		fputs( prompt, stdout );
 		fputs( RESET_FORMAT, stdout );
 
-		if( ( shell_cmd_in( list ) ) == 0 )
+		LL *head; head = NULL;
+
+		if( ( shell_cmd_in(&head) ) == 0 )
 			continue;
 		else
 			return 1;
@@ -85,7 +87,7 @@ int shell_prompt( LList** list )
 
 /* */
 
-int shell_cmd_in( LList** list )
+int shell_cmd_in(LL **head)
 {
 	char cmd_line[ MEM_MAX ];
 	memset( cmd_line, 0, MEM_MAX );
@@ -103,7 +105,10 @@ int shell_cmd_in( LList** list )
 		cmd_line[ln] = '\0';
 
 	//shell_tok( cmd_line, list );
-	newTok(cmd_line);
+
+	newTok(cmd_line,head); // head should now have a list of commands
+	execute(*head);
+	destroy(*head);
 
 
 

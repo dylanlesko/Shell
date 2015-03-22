@@ -81,9 +81,10 @@ void shiftCmd(char *cmd_line) {
 }
 
 
-void newTok(char *cmd_line) {
+LL **newTok(char *cmd_line,LL **head) {
 
         char tokens[51][2048];
+	memset(tokens,'\0',51*2048);
         char *iter = cmd_line;
         int offset, tokNum, i;
         tokNum = 0; i = 0; offset = 0;
@@ -118,18 +119,18 @@ void newTok(char *cmd_line) {
                                 offset = 0;
                         } else {
                                 fprintf(stderr,"No matching quote %c for command. Exiting...\n",*iter);
-                                return;
+                                return (LL **)NULL;
                         }
                 } else if(*iter == '|') {
 			// Create a node with all of the tokens
                         if(*tokens == '\0') {
                                 fprintf(stderr,"Error: no tokens for command\n");
-                                return;
+                                return (LL **)NULL;
                         } else {
-                                //listInsert(head,tokens);              
                                 condense(tokens);
-                                printTokens(tokens);
-                                printf("Would like to call listInsert(head,tokens) to add a command to the list\n");
+                                //printTokens(tokens);
+                                //printf("Would like to call listInsert(head,tokens) to add a command to the list\n");
+				insert(head,tokens);
                                 memset(tokens,'\0',51*2048); // reset the token buffer to NULL
                                 iter++;
                                 i = 0;
@@ -141,9 +142,14 @@ void newTok(char *cmd_line) {
                 }
         }
 
-        printTokens(tokens);
+	condense(tokens);
+        //printTokens(tokens);
+	insert(head,tokens);
 	memset(tokens,'\0',51*2048); // reset the token buffer to NULL
+
         if(*tokens == '\0')
                 printf("Insert the last set of tokens as a command\n");
+
+	return head;
 }
 
