@@ -154,6 +154,9 @@ void execute(LL *head) {
                                 }
 
                         default:
+				if(strcmp(cmd->command,"exit")==0){
+					builtIn(cmd);
+				}
                                 if(i < pipeNum) {
                                         close(pipes[i][1]); //close(pipes[i][0]);
                                         cmd = cmd->next;
@@ -184,7 +187,8 @@ int builtIn(LL *cmd) {
 		if(strcmp(cmd->command, thisbuilt->name) == 0){
 			printf("i is %d", i);
 		}
-	}*/
+	}
+*/
 	if(strcmp(cmd->command,"cd") == 0){
 		our_cd(cmd->args);
 		return 1;
