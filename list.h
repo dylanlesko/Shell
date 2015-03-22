@@ -15,5 +15,8 @@ int length(LL *head);
 void destroy(LL *head);
 void print(LL *node);
 void printList(LL *head);
+void insert(LL **head,char tokens[][2048]);
+void initNode(LL *newNode,char tokens[][2048]);
+
 
 #endif

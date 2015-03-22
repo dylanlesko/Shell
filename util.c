@@ -5,6 +5,10 @@
 #include "util.h"
 
 
+int builtIn(LL *cmd) {
+	return 0;
+}
+/*
 int our_exit(char args[50][2048]){
 	if(args==NULL){
 		exit(0);
@@ -47,7 +51,7 @@ int our_cd(char dir[50][2048]){
 	printf("now in dir%s",cwd2);
 
 }
-
+*/
 
 void prepForExec(char *Args[],LL *node) {
 	
@@ -175,7 +179,7 @@ void execute(LL *head) {
 
 
 
-int builtIn(LL *cmd) {
+//int builtIn(LL *cmd) {
 /*
 	int i;
 	for(i = 0; i < sizeof(existBuilts)/sizeof(struct builtins); i++){
@@ -185,6 +189,7 @@ int builtIn(LL *cmd) {
 			printf("i is %d", i);
 		}
 	}*/
+/*
 	if(strcmp(cmd->command,"cd") == 0){
 		our_cd(cmd->args);
 		return 1;
@@ -195,7 +200,7 @@ int builtIn(LL *cmd) {
 		return 0;
 	}
 }
-
+*/
 
 
 
