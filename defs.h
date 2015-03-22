@@ -5,7 +5,7 @@
 
 
 #include "types.h"
-
+#include "list.h"
 #include <stdlib.h>
 
 
@@ -44,9 +44,9 @@
 
 void shell_exit( void );
 
-int shell_cmd_in( LList** list );
+int shell_cmd_in( LL** list );
 
-int shell_prompt( LList** list );
+int shell_prompt( LL** list );
 
 int shell_init();
 
@@ -56,9 +56,9 @@ int shell_init();
 
 /* tok.c */
 
-int 
+LL* 
 
-	shell_tok		( char* args, 		LList** list 					
+	shell_tok		( char* args, 		LL** list 					
 
 	);
 

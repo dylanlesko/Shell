@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g
-HFILES = defs.h types.h
-SHELLFILES = shell.c tok.c list.c isstdio.c
+HFILES = defs.h types.h list.h util.h
+SHELLFILES = shell.c tok.c list.c isstdio.c util.c
 TESTFILES = tests.c
 
 all: shell

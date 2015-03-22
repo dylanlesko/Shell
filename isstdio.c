@@ -8,9 +8,7 @@ int is_std_i()
 	if (isatty(0)) 
 	{
 		//printf("the standard input is from a terminal\n");
-
 		return true;
-
 	}
 	else
 	{
@@ -31,5 +29,4 @@ int is_std_o()
 		//printf("the standard output is NOT to a terminal\n");
 		return false;
 	}
-
 }

@@ -15,10 +15,11 @@ int our_exit(char[50][2048]);
 struct builtins{
 	char *name;
 	int (*f)();
-}existBuilts[2]= {
+	existBuilts[2]= {
 		{"cd", &our_cd},
 		{"exit", &our_exit},
-		};
+	};
+};
 
 typedef struct builtin builtins;
 
