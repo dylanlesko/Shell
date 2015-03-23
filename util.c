@@ -143,8 +143,9 @@ void execute(LL *head) {
                         case 0:
                                 if(i == 0) { // beginning
 					if(builtInCheck(cmd)) {
-						//printf("built-in action: %s\n",cmd->command);
-						builtIn(cmd);
+						//printf("built-in %s: do nothing\n",cmd->command);
+						exit(0);
+						break;
 					} else {
 						dup2(pipes[i][1],1);
                                         	closeFDsingle(pipes[i][1],pipes,pipeNum);
@@ -155,8 +156,9 @@ void execute(LL *head) {
 					}
                                 } else if(i == pipeNum) { // end
 					if(builtInCheck(cmd)) {
-						//printf("built-in action: %s\n",cmd->command);
-						builtIn(cmd);
+						//printf("built-in %s: do nothing\n",cmd->command);
+						//builtIn(cmd);
+						break;
 
 					} else {
 						dup2(pipes[i-1][0],0);
@@ -168,8 +170,9 @@ void execute(LL *head) {
 					}
                                 } else { // middle
 					if(builtInCheck(cmd)) {
-						//printf("built-in action: %s\n",cmd->command);
-						builtIn(cmd);
+						//printf("built-in %s: do nothing\n",cmd->command);
+						//builtIn(cmd);
+						break;
 					} else {
 						dup2(pipes[i-1][0],0);
 	                                        dup2(pipes[i][1],1);
@@ -182,6 +185,11 @@ void execute(LL *head) {
                                 }
 
                         default:
+				if(builtInCheck(cmd)) {
+					printf("Built-in called from parent\n");
+					builtIn(cmd);
+				}
+			
                                 if(i < pipeNum) {
                                         close(pipes[i][1]); //close(pipes[i][0]);
                                         cmd = cmd->next;

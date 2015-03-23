@@ -16,7 +16,7 @@ char prompt[ 2 ];
 
 void shell_exit(void)
 {
-	printf("\n\n");
+	printf("\n");
 }
 
 
