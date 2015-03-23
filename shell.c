@@ -89,7 +89,16 @@ int shell_prompt()
 	return 0;
 }
 
+int alphaCheck(char *cmd_line) {
+	
+	int i,alNumFlag; alNumFlag = 0; // 1 means there are alnums, 0 means no alnums
+	for(i = 0; i < strlen(cmd_line); i++) {
+		if(isalnum(cmd_line[i]))
+			alNumFlag = 1;
+	}
 
+	return alNumFlag;
+}
 
 /* */
 
@@ -112,21 +121,18 @@ int shell_cmd_in(LL **head)
 
 	// if the entire string doesn't have any alpha numerics, then just print another prompt
 
-	int i,alNumFlag; alNumFlag = 0; // 1 means there are alnums, 0 means no alnums
-	for(i = 0; i < strlen(cmd_line); i++) {
-		if(isalnum(cmd_line[i]))
-			alNumFlag = 1;
-	}
-
+	
+	int alphaNumFlag;
+	alphaNumFlag = alphaCheck(cmd_line);
 		
-	if(alNumFlag == 1) {	
+	if(alphaNumFlag == 1) {	
 	
 		//shell_tok( cmd_line, list );
 	
 		newTok(cmd_line,head); // head should now have a list of commands
 		execute(*head);
 		//destroy(*head);
-	} else if(alNumFlag == 0) {
+	} else if(alphaNumFlag == 0) {
 		printf("");
 	}
 
@@ -135,3 +141,5 @@ int shell_cmd_in(LL **head)
 
 	return 0;
 }
+
+
