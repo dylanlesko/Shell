@@ -8,7 +8,9 @@ void prepForExec(char *Args[], LL *node);
 void closeFDsingle(int fd, int pipes[][2], int pipeNum);
 void closeFDdouble(int one, int two, int pipes[][2],int pipeNum);
 void execute(LL *head);
+
 int builtIn(LL *cmd);
+/*
 int our_cd(char[50][2048]);
 int our_exit(char[50][2048]);
 
@@ -22,5 +24,5 @@ struct builtins{
 };
 
 typedef struct builtin builtins;
-
+*/
 #endif

@@ -11,11 +11,9 @@ char dir_cur[ MEM_MAX ];
 char prompt[ 2 ];
 
 
-
-
-
-void shell_exit(void){
-	printf("\n\n");
+void shell_exit(void)
+{
+	printf("\n");
 }
 
 
@@ -27,9 +25,11 @@ int main(){
 	
 
 	atexit(shell_exit);
-	LL **argsLL = ( LL** )malloc( sizeof( LL ) );
-	if ( (shell_init( ) ) == 0 ){
-		shell_prompt( argsLL );
+	//LList **argsLL = ( LList** )malloc( sizeof( LList ) );
+
+	if ( (shell_init( ) ) == 0 )
+	{
+		shell_prompt();
 	}
 	exit( 0 );
 }
@@ -65,16 +65,21 @@ int shell_init(){
 
 /* */
 
-int shell_prompt( LL** list ){	
+int shell_prompt()
+{	
+	while( show_prompt == true )
+	{
+		getcwd( dir_cur, MEM_MAX );
 
-	while( show_prompt == true ){
 		fputs( RESET_FORMAT, stdout );
 		fputs( dir_cur, stdout );
 		fputs( MAKE_RED, stdout );
 		fputs( prompt, stdout );
 		fputs( RESET_FORMAT, stdout );
 
-		if( ( shell_cmd_in( list ) ) == 0 )
+		LL *head; head = NULL;
+
+		if( ( shell_cmd_in(&head) ) == 0 )
 			continue;
 		else
 			return 1;
@@ -86,8 +91,9 @@ int shell_prompt( LL** list ){
 
 /* */
 
-int shell_cmd_in( LL** list ){
 
+int shell_cmd_in(LL **head)
+{
 	char cmd_line[ MEM_MAX ];
 	memset( cmd_line, 0, MEM_MAX );
 
@@ -106,7 +112,10 @@ int shell_cmd_in( LL** list ){
 	//printList(toked);
 
 	//shell_tok( cmd_line, list );
-	newTok(cmd_line);
+
+	newTok(cmd_line,head); // head should now have a list of commands
+	execute(*head);
+	destroy(*head);
 
 
 
