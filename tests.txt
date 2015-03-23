@@ -1,0 +1,24 @@
+Testing:
+	1) Get another prompt, but "No such file or directory" is output
+	2) Spaces and tabs get output, then "No such file or directory" is output, then we get the prompt again
+	3) Pass
+	4) Pass
+	5) I think it passes, but the description and example don't match in the Guidelines for Testing
+	6) Pass
+	7) Pass
+	8) Pass
+	9) Pass
+	10) Pass, with error code of 3
+	11) Pass
+	12) Pass
+	13) Pass
+	14) Pass
+	15) Pass
+	16) It does the functions, but it doesn't give the prompt back
+	17) Pass
+	18) Pass if the directory where the shell is executed is the home directory.
+	19) Pass 
+	20) Pass
+	21) Pass
+	22) Fail. Does not consider the input to the terminal as valid and then just hangs
+	23) Fail. Same reason as 22.

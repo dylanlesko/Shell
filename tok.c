@@ -283,8 +283,13 @@ LL **newTok(char *cmd_line,LL **head) {
                                 tokNum = 0;
                         }
                 }  else {
-                        tokens[tokNum][i] = *iter;
-                        i++; iter++;
+			if(tokNum < 51) {
+	                        tokens[tokNum][i] = *iter;
+	                        i++; iter++;
+			} else {
+				fprintf(stderr,"Too many arguments.\n");
+				return (LL **)NULL;
+			}
                 }
         }
 
