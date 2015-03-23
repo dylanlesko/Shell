@@ -7,7 +7,7 @@
 extern char dir_home[ MEM_MAX ];
 extern char dir_cur[ MEM_MAX ];
 
-/* */
+/* Built-in exit function*/
 int our_exit(char args[ 50 ][ MEM_MAX ] ) {
 	if( args == NULL ) {
 		exit( 0 );
@@ -16,7 +16,7 @@ int our_exit(char args[ 50 ][ MEM_MAX ] ) {
 	exit( atoi( args[ 0 ] ) );
 }
 
-/* */
+/* Build-in cd function*/
 int our_cd( char dir[ 50 ][ MEM_MAX ] ) {
 
 	char Null[ MEM_MAX ];
@@ -75,7 +75,7 @@ void prepfs() {
 	((struct builtins*)builts[1])->f = &our_exit;
 }
 
-/* */
+/* Function to execute a built-in command */
 int builtIn( LL *cmd ) {
 	
 	int i;
@@ -88,7 +88,7 @@ int builtIn( LL *cmd ) {
 	return 0;
 }
 
-/* */
+/* Prepare the Args string to be passed to execvp */
 void prepForExec(char *Args[], LL *node) {
 	
 	Args[0] = node->command;
@@ -108,7 +108,7 @@ void prepForExec(char *Args[], LL *node) {
 	return;
 }
 
-/* */
+/* Close a single file descriptor*/
 void closeFDsingle( int fd, int pipes[][2], int pipeNum ) {
 
         int i, j;
@@ -120,7 +120,7 @@ void closeFDsingle( int fd, int pipes[][2], int pipeNum ) {
         }
 }
 
-/* */
+/* Close two file descriptors*/
 void closeFDdouble( int one, int two, int pipes[][2], int pipeNum ) {
 
         int i, j;
@@ -132,7 +132,7 @@ void closeFDdouble( int one, int two, int pipes[][2], int pipeNum ) {
         }
 }
 
-/* */
+/* Checks whether the given command is a built-in command */
 int builtInCheck( LL *cmd ) {
 
 	int i;
@@ -143,7 +143,7 @@ int builtInCheck( LL *cmd ) {
 	return 0;
 }
 
-/* */
+/* Executes a list of commands which are stored in a linked list */
 void execute( LL *head ) {
 
 	int status;
