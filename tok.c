@@ -16,7 +16,7 @@ int shell_tok_match_len( char* cmd_line, char match )   {
         }
 }
 
-
+/*
 int addArg(LL *node, char *new){
 	//printf("adding arg%s",new);
 	int i = 0;
@@ -38,6 +38,7 @@ int addArg(LL *node, char *new){
 	return new_node;
 
 }
+*/
 
 /*
 LL* shell_tok( char* args, LL** list )	{	 

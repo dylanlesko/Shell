@@ -27,7 +27,7 @@ int shell_init();
 
 /* tok.c */
 
-int shell_tok(char* args, LList** list);
+int shell_tok(char* args, LL **list);
 int shell_tok_match_len(char* cmd_line, char match);
 
 /* list.c */

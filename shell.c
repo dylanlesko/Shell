@@ -107,9 +107,6 @@ int shell_cmd_in(LL **head)
 	size_t ln = strlen(cmd_line) - 1;
 	if ( cmd_line[ln] == '\n' )
 		cmd_line[ln] = '\0';
-	LL* toked;
-	toked = shell_tok( cmd_line, list );
-	//printList(toked);
 
 	//shell_tok( cmd_line, list );
 
@@ -119,9 +116,6 @@ int shell_cmd_in(LL **head)
 
 
 
-	execute(toked);
 
-//	putting destroy here causes it to only work once
-//	destroy(toked);
 	return 0;
 }
