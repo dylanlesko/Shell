@@ -1,6 +1,9 @@
 Testing:
 	1) Pass 
 	2) Pass
+	3) Pass
+	4) Pass
+	5) Pass
 	6) Pass
 	7) Pass
 	8) Pass
@@ -17,7 +20,7 @@ Testing:
 	19) Pass 
 	20) Pass
 	21) Pass
-	22) Fail. Does not consider the input to the terminal as valid and then just hangs
-	23) Fail. Same reason as 22.
+	22) Pass
+	23) Pass
 
 
