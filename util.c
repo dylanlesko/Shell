@@ -64,7 +64,31 @@ int our_cd(char dir[50][2048]){
 
 }
 
+
+struct builtins** builts;
+void prepfs(){
+	builts = (struct builtins**)malloc(2*sizeof(struct builtins));
+	builts[0] = (struct builtins*)malloc(sizeof(struct builtins));
+	builts[1] = (struct builtins*)malloc(sizeof(struct builtins));	
+	((struct builtins*)builts[0])->name = "cd";
+	((struct builtins*)builts[1])->name = "exit";
+	((struct builtins*)builts[0])->f = &our_cd;
+	((struct builtins*)builts[1])->f = &our_exit;
+	//printf("b1's name is %s",(char*)((struct builtins*)builts[0]->name));
+}
+
 int builtIn(LL *cmd) {
+	
+	int i;
+	for(i = 0; i <2; i ++){
+		if(strcmp(cmd->command, ((struct builtins*)builts[i])->name) == 0){
+			((struct builtins*)builts[i])->f(cmd->args);
+			return 1;
+		}
+	}
+	return 0;
+
+/*
 	if(strcmp(cmd->command,"cd") == 0){
 		our_cd(cmd->args);
 		return 1;
@@ -73,7 +97,7 @@ int builtIn(LL *cmd) {
 		return 1;
 	}else{
 		return 0;
-	}
+	}*/
 }
 
 
@@ -123,13 +147,20 @@ void closeFDdouble(int one, int two, int pipes[][2], int pipeNum) {
 }
 
 int builtInCheck(LL *cmd) {
-
+/*
 	if(strcmp(cmd->command,"cd") == 0)
 		return 1;
 	else if(strcmp(cmd->command,"exit") == 0)
 		return 1;
 	else
 		return 0;
+*/
+	int i;
+	for(i = 0; i <2; i ++){
+		if(strcmp(cmd->command, ((struct builtins*)builts[i])->name) == 0)
+			return 1;
+	}
+	return 0;
 }
 
 void execute(LL *head) {

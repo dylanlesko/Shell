@@ -5,6 +5,7 @@
 #include "defs.h"
 #include "types.h"
 #include "list.h"
+#include "util.h"
 
 boolean show_prompt = true;
 char dir_home[ MEM_MAX ];
@@ -24,8 +25,10 @@ void shell_exit(void)
 /* */
 boolean firstRun;
 
+
 int main(){
-	firstRun = true;	
+
+	prepfs();	
 
 	atexit(shell_exit);
 	//LList **argsLL = ( LList** )malloc( sizeof( LList ) );

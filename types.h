@@ -8,11 +8,6 @@ typedef enum {
 } boolean;
 
 
-
-
-
-/* */
-
 /*
 typedef struct LList
 {

@@ -9,7 +9,15 @@ void closeFDsingle(int fd, int pipes[][2], int pipeNum);
 void closeFDdouble(int one, int two, int pipes[][2],int pipeNum);
 void execute(LL *head);
 
+
+void prepfs();
 int builtIn(LL *cmd);
+
+typedef struct builtins{
+	char *name;
+	int (*f)();
+};
+
 /*
 int our_cd(char[50][2048]);
 int our_exit(char[50][2048]);
