@@ -4,7 +4,7 @@
 #include "defs.h"
 #include "types.h"
 
-/* */
+/* returns length of the list */
 int length( LL *head ) {
 
 	int count;
@@ -17,7 +17,7 @@ int length( LL *head ) {
 	return count;
 }
 
-/* */
+/* free allocated memory for a list */
 void destroy( LL *head ) {
 
 	LL *forward = head->next;
@@ -57,7 +57,7 @@ void printList( LL *head ) {
 	}
 }
 
-/* */
+/* initialize a linkedlist */
 void initNode( LL *newNode, char tokens[][ MEM_MAX ] ) {
 
 	char null[ MEM_MAX ];
@@ -77,7 +77,7 @@ void initNode( LL *newNode, char tokens[][ MEM_MAX ] ) {
 	newNode->next = NULL;
 }
 
-/* */
+/* insert a node into a linked list */
 void insert( LL **head, char tokens[][ MEM_MAX ] ) {
 
 	// Find the last node

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 
-/* */
+/* Returns the number of chars in a string, until a match is found */
 int shell_tok_match_len( char* cmd_line, char match )   {
 
         char *iter = cmd_line;
@@ -45,7 +45,7 @@ void condense( char tokens[][ MEM_MAX ] ) {
         }
 }
 
-/* */
+/* output all the tokens */
 void printTokens( char tokens[][ MEM_MAX ] ) {
 
         char null[ MEM_MAX ];

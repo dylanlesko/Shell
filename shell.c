@@ -10,12 +10,12 @@ char dir_home[ MEM_MAX ];
 char dir_cur[ MEM_MAX ];
 char prompt[ 2 ];
 
-/* */
+/* fluff exit function to just add a newline at program termination */
 void shell_exit( void )	{
 	printf( "\n" );
 }
 
-/* */
+/* default function to start up a shell process */
 int main()	{
 
 	prepfs();	
@@ -29,7 +29,7 @@ int main()	{
 	exit( 0 );
 }
 
-/* */
+/* initialize the shell variables */
 int shell_init()	{
 	show_prompt = is_std_i();
 	strcpy( prompt, "$: " );
@@ -39,7 +39,7 @@ int shell_init()	{
 	return 0;
 }
 
-/* */
+/* loop the shell prompt to the user */
 int shell_prompt()	{	
 	/* Loop Prompt Indefinitely*/
 	while( 1 )
@@ -73,7 +73,7 @@ int shell_prompt()	{
 	return 0;
 }
 
-/* */
+/* checks for a alphanumeric character in a string */
 int alphaCheck( char *cmd_line )	{
 	
 	int i, alNumFlag; 
@@ -87,7 +87,7 @@ int alphaCheck( char *cmd_line )	{
 	return alNumFlag;
 }
 
-/* */
+/* accept command line input for the shell */
 int shell_cmd_in( LL **head )	{
 
 	char cmd_line[ MEM_MAX ];
