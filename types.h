@@ -8,23 +8,20 @@ typedef enum {
 } boolean;
 
 
-/*
-typedef struct LList
-{
-	char command[2048];
-	char args[51][2048];
-	int arg_count;
-	struct LList *next;
-} LList;
-
-
-
-*/
+/* */
+typedef struct linkedList {
+        char command[2048];
+        char args[50][2048];
+        struct linkedList *next;
+} LL;
 
 /* */
-typedef char* stringStructPtr;
-/* */
+typedef struct builtins{
+	char *name;
+	int (*f)();
+} builtins;
 
+/* */
 #define FREE(ptr) 	\
 do{ 				\
 free((ptr)); 		\

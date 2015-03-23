@@ -4,34 +4,23 @@
 #include <ctype.h>
 #include "defs.h"
 #include "types.h"
-#include "list.h"
-#include "util.h"
 
 boolean show_prompt = true;
 char dir_home[ MEM_MAX ];
 char dir_cur[ MEM_MAX ];
 char prompt[ 2 ];
 
-
-void shell_exit(void)
-{
-	printf("\n");
+/* */
+void shell_exit( void )	{
+	printf( "\n" );
 }
 
-
-
-
-
 /* */
-boolean firstRun;
-
-
-int main(){
+int main()	{
 
 	prepfs();	
 
-	atexit(shell_exit);
-	//LList **argsLL = ( LList** )malloc( sizeof( LList ) );
+	atexit( shell_exit) ;
 
 	if ( (shell_init( ) ) == 0 )
 	{
@@ -40,11 +29,8 @@ int main(){
 	exit( 0 );
 }
 
-
-
 /* */
-int shell_init()
-{
+int shell_init()	{
 	show_prompt = is_std_i();
 	strcpy( prompt, "$: " );
 	strcpy( dir_home, getenv( "HOME" ) );
@@ -54,10 +40,11 @@ int shell_init()
 }
 
 /* */
-int shell_prompt()
-{	
-	while(1)
+int shell_prompt()	{	
+	/* Loop Prompt Indefinitely*/
+	while( 1 )
 	{
+		/* Working Dir is only displayed when stdin is a terminal */
 		if( show_prompt == true )
 		{
 			fputs( RESET_FORMAT, stdout );
@@ -86,11 +73,14 @@ int shell_prompt()
 	return 0;
 }
 
-int alphaCheck(char *cmd_line) {
+/* */
+int alphaCheck( char *cmd_line )	{
 	
-	int i,alNumFlag; alNumFlag = 0; // 1 means there are alnums, 0 means no alnums
-	for(i = 0; i < strlen(cmd_line); i++) {
-		if(isalnum(cmd_line[i]))
+	int i, alNumFlag; 
+	alNumFlag = 0; // 1 means there are alnums, 0 means no alnums
+
+	for( i = 0; i < strlen( cmd_line ); i++ ) {
+		if( isalnum( cmd_line[ i ] ) )
 			alNumFlag = 1;
 	}
 
@@ -98,10 +88,8 @@ int alphaCheck(char *cmd_line) {
 }
 
 /* */
+int shell_cmd_in( LL **head )	{
 
-
-int shell_cmd_in(LL **head)
-{
 	char cmd_line[ MEM_MAX ];
 	memset( cmd_line, 0, MEM_MAX );
 
@@ -109,34 +97,19 @@ int shell_cmd_in(LL **head)
 		return 1;
 	}
 
-
-
 	/* Replacing trailing newline with a terminating nullchar */
-	size_t ln = strlen(cmd_line) - 1;
-	if ( cmd_line[ln] == '\n' )
-		cmd_line[ln] = '\0';
+	size_t ln = strlen( cmd_line ) - 1;
+	if ( cmd_line[ ln ] == '\n' )
+		cmd_line[ ln ] = '\0';
 
 	// if the entire string doesn't have any alpha numerics, then just print another prompt
-
-	
 	int alphaNumFlag;
-	alphaNumFlag = alphaCheck(cmd_line);
+	alphaNumFlag = alphaCheck( cmd_line );
 		
-	if(alphaNumFlag == 1) {	
-	
-		//shell_tok( cmd_line, list );
-	
-		newTok(cmd_line,head); // head should now have a list of commands
-		execute(*head);
-		//destroy(*head);
-	} else if(alphaNumFlag == 0) {
-		printf("");
+	if( alphaNumFlag == 1 )	{		
+		newTok( cmd_line, head ); // head should now have a list of commands
+		execute( *head );
 	}
-
-
-
 
 	return 0;
 }
-
-

@@ -5,7 +5,7 @@
 
 int is_std_i()
 {
-	if (isatty(0)) 
+	if ( isatty(0) ) 
 	{
 		//printf("the standard input is from a terminal\n");
 		return true;
@@ -19,7 +19,7 @@ int is_std_i()
 
 int is_std_o()
 {
-	if (isatty(1))
+	if ( isatty(1) )
 	{
 		//printf("the standard output is to a terminal\n");
 		return true;
