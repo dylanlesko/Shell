@@ -40,54 +40,43 @@ int main(){
 
 
 /* */
+int shell_init()
+{
+	show_prompt = is_std_i();
+	strcpy( prompt, "$: " );
+	strcpy( dir_home, getenv( "HOME" ) );
+	getcwd( dir_cur, MEM_MAX );
 
-
-int shell_init(){
-
-	if( is_std_i() == true || firstRun == true){
-		firstRun = false;
-
-		show_prompt = true;
-		strcpy( prompt, "$: " );
-		strcpy( dir_home, getenv( "HOME" ) );
-		getcwd( dir_cur, MEM_MAX );
-
-/*
-		char wdir[1024];
-		getcwd(wdir, sizeof(wdir));
-		strcpy(dir_home, wdir);
-*/
-
-		return 0;
-	}else{
-		printf("stdin is not a terminal\n");
-		return 1;
-	}
-	return 1;
+	return 0;
 }
 
-
-
 /* */
-
 int shell_prompt()
 {	
-	while( show_prompt == true )
+	while(1)
 	{
-		getcwd( dir_cur, MEM_MAX );
+		if( show_prompt == true )
+		{
+			fputs( RESET_FORMAT, stdout );
+			fputs( dir_cur, stdout );
+			fputs( MAKE_RED, stdout );
+			fputs( prompt, stdout );
+			fputs( RESET_FORMAT, stdout );
 
-		fputs( RESET_FORMAT, stdout );
-		fputs( dir_cur, stdout );
-		fputs( MAKE_RED, stdout );
-		fputs( prompt, stdout );
-		fputs( RESET_FORMAT, stdout );
-
-		LL *head; head = NULL;
-
-		if( ( shell_cmd_in(&head) ) == 0 )
-			continue;
+			LL *head; head = NULL;
+			if( ( shell_cmd_in(&head) ) == 0 )
+				continue;
+			else
+				return 1;
+		}
 		else
-			return 1;
+		{
+			LL *head; head = NULL;
+			if( ( shell_cmd_in(&head) ) == 0 )
+				continue;
+			else
+				return 1;
+		}
 	}
 	return 0;
 }
