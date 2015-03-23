@@ -77,6 +77,8 @@ int shell_prompt()
 			else
 				return 1;
 		}
+		
+
 	}
 	return 0;
 }

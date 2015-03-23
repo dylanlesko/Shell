@@ -6,6 +6,7 @@
 #include "defs.h"
 
 extern char dir_home[MEM_MAX];
+extern char dir_cur[MEM_MAX];
 
 
 int our_exit(char args[50][2048]){
@@ -22,6 +23,8 @@ int our_cd(char dir[50][2048]){
 	memset(Null,'\0',2048);
 	if(strcmp(dir[0],Null) == 0){
 		chdir(dir_home);	
+		memset(dir_cur,'\0',MEM_MAX);
+		strcpy(dir_cur,dir_home);
 		return 0;
 	}
 
@@ -43,12 +46,15 @@ int our_cd(char dir[50][2048]){
 			strcat(path, "/");
 			strcat(path, dir[0]);
 			chdir(path);
-
+			memset(dir_cur,'\0',MEM_MAX);
+			strcpy(dir_cur,path);
 		}else{
 			perror("getcwd() error");
 		}
 	}else{
 		chdir(dir[0]);
+		memset(dir_cur,'\0',MEM_MAX);
+		strcpy(dir_cur,dir[0]);
 	}
 
 	

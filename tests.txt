@@ -24,3 +24,4 @@ Testing:
 	23) Pass
 
 
+Update prompt string to current directory
