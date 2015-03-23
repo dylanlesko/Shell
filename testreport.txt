@@ -1,27 +1,24 @@
 Testing:
-	1) Pass 
-	2) Pass
-	3) Pass
-	4) Pass
-	5) Pass
-	6) Pass
-	7) Pass
-	8) Pass
-	9) Pass
-	10) Pass, with error code of 3
-	11) Pass
-	12) Pass
-	13) Pass
-	14) Pass
-	15) Pass
-	16) It does the functions, but it doesn't give the prompt back
-	17) Pass
-	18) Pass 
-	19) Pass 
-	20) Pass
-	21) Pass
-	22) Pass
-	23) Pass
-
-
-Update prompt string to current directory
+	1) 	Pass 
+	2) 	Pass
+	3) 	Pass
+	4) 	Pass
+	5) 	Pass
+	6) 	Pass
+	7) 	Pass
+	8) 	Pass
+	9) 	Pass
+	10)	Pass
+	11) 	Pass
+	12)	Pass
+	13) 	Pass
+	14) 	Pass
+	15) 	Pass
+	16)	It does the functions, but it doesn't give the prompt back
+	17)	Pass
+	18)	Pass 
+	19) 	Pass 
+	20) 	Pass
+	21) 	Pass
+	22) 	Pass
+	23) 	Pass
