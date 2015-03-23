@@ -67,7 +67,10 @@ int builtIn(LL *cmd) {
 void prepForExec(char *Args[],LL *node) {
 	
 	Args[0] = node->command;
-	
+
+	char null[2048];
+	memset(null,'\0',2048);
+
 	int i;
 	i = 0;
 	while((strcmp(node->args[i],"")) != 0) {
@@ -76,6 +79,7 @@ void prepForExec(char *Args[],LL *node) {
 	}
 
 	Args[i+1] = NULL;
+
 
 	return;
 
