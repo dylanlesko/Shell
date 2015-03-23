@@ -5,10 +5,6 @@
 #include "util.h"
 
 
-int builtIn(LL *cmd) {
-	return 0;
-}
-/*
 int our_exit(char args[50][2048]){
 	if(args==NULL){
 		exit(0);
@@ -26,10 +22,13 @@ int our_cd(char dir[50][2048]){
 		fprintf(stderr, "\ncd: too many arguments\n");
 		return 0;
 	}
+	
+	char null[1024];
+	memset(null,0,1024);
 
 	char cwd[1024];
 	if(strncmp(dir[0],"/", 1) != 0){
-		if (getcwd(cwd, sizeof(cwd)) != NULL){
+		if (getcwd(cwd, sizeof(cwd)) != 0){
 			//fprintf(stdout, "Current working dir: %s\n", cwd);
 
 			char path[2048];
@@ -48,10 +47,22 @@ int our_cd(char dir[50][2048]){
 	
 	char cwd2[1024];
 	getcwd(cwd2, sizeof(cwd2));
-	printf("now in dir%s",cwd2);
+	printf("now in dir %s\n",cwd2);
 
 }
-*/
+
+int builtIn(LL *cmd) {
+	if(strcmp(cmd->command,"cd") == 0){
+		our_cd(cmd->args);
+		return 1;
+	}else if (strcmp(cmd->command,"exit") == 0){
+		our_exit(cmd->args);
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 
 void prepForExec(char *Args[],LL *node) {
 	
@@ -94,6 +105,15 @@ void closeFDdouble(int one, int two, int pipes[][2], int pipeNum) {
         }
 }
 
+int builtInCheck(LL *cmd) {
+
+	if(strcmp(cmd->command,"cd") == 0)
+		return 1;
+	else if(strcmp(cmd->command,"exit") == 0)
+		return 1;
+	else
+		return 0;
+}
 
 void execute(LL *head) {
 
@@ -122,9 +142,10 @@ void execute(LL *head) {
 
                         case 0:
                                 if(i == 0) { // beginning
-					if(builtIn(cmd)) 
-						printf("built-in action: %s\n",cmd->command);
-					else {
+					if(builtInCheck(cmd)) {
+						//printf("built-in action: %s\n",cmd->command);
+						builtIn(cmd);
+					} else {
 						dup2(pipes[i][1],1);
                                         	closeFDsingle(pipes[i][1],pipes,pipeNum);
 	                                        char *Args[51];
@@ -133,9 +154,11 @@ void execute(LL *head) {
 	                                        perror(Args[0]);
 					}
                                 } else if(i == pipeNum) { // end
-					if(builtIn(cmd))
-						printf("built-in action: %s\n",cmd->command);
-					else {
+					if(builtInCheck(cmd)) {
+						//printf("built-in action: %s\n",cmd->command);
+						builtIn(cmd);
+
+					} else {
 						dup2(pipes[i-1][0],0);
 	                                        closeFDsingle(pipes[i-1][0],pipes,pipeNum);
 	                                        char *Args[51];
@@ -144,9 +167,10 @@ void execute(LL *head) {
         	                                perror(Args[0]);
 					}
                                 } else { // middle
-					if(builtIn(cmd))
-						printf("built-in action: %s\n",cmd->command);
-					else {
+					if(builtInCheck(cmd)) {
+						//printf("built-in action: %s\n",cmd->command);
+						builtIn(cmd);
+					} else {
 						dup2(pipes[i-1][0],0);
 	                                        dup2(pipes[i][1],1);
 						closeFDdouble(pipes[i-1][0],pipes[i][1],pipes,pipeNum);
@@ -179,28 +203,9 @@ void execute(LL *head) {
 
 
 
-//int builtIn(LL *cmd) {
-/*
-	int i;
-	for(i = 0; i < sizeof(existBuilts)/sizeof(struct builtins); i++){
-		builtin *thisbuilt;
-		thisbuilt = existBuilts[i];
-		if(strcmp(cmd->command, thisbuilt->name) == 0){
-			printf("i is %d", i);
-		}
-	}*/
-/*
-	if(strcmp(cmd->command,"cd") == 0){
-		our_cd(cmd->args);
-		return 1;
-	}else if (strcmp(cmd->command,"exit") == 0){
-		our_exit(cmd->args);
-		return 1;
-	}else{
-		return 0;
-	}
-}
-*/
+
+
+
 
 
 

@@ -67,6 +67,8 @@ int shell_prompt()
 {	
 	while( show_prompt == true )
 	{
+		getcwd( dir_cur, MEM_MAX );
+
 		fputs( RESET_FORMAT, stdout );
 		fputs( dir_cur, stdout );
 		fputs( MAKE_RED, stdout );
