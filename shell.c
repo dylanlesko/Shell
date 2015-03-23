@@ -22,8 +22,10 @@ void shell_exit(void)
 
 
 /* */
+boolean firstRun;
+
 int main(){
-	
+	firstRun = true;	
 
 	atexit(shell_exit);
 	//LList **argsLL = ( LList** )malloc( sizeof( LList ) );
@@ -42,7 +44,8 @@ int main(){
 
 int shell_init(){
 
-	if( is_std_i() == true ){
+	if( is_std_i() == true || firstRun == true){
+		firstRun = false;
 
 		show_prompt = true;
 		strcpy( prompt, "$: " );
