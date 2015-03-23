@@ -112,7 +112,7 @@ int shell_cmd_in(LL **head)
 
 	newTok(cmd_line,head); // head should now have a list of commands
 	execute(*head);
-	destroy(*head);
+	//destroy(*head);
 
 
 
