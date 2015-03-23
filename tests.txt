@@ -16,7 +16,7 @@ Testing:
 	15) Pass
 	16) It does the functions, but it doesn't give the prompt back
 	17) Pass
-	18) Pass if the directory where the shell is executed is the home directory.
+	18) Pass 
 	19) Pass 
 	20) Pass
 	21) Pass

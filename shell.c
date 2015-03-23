@@ -48,10 +48,11 @@ int shell_init(){
 		strcpy( dir_home, getenv( "HOME" ) );
 		getcwd( dir_cur, MEM_MAX );
 
-
+/*
 		char wdir[1024];
 		getcwd(wdir, sizeof(wdir));
 		strcpy(dir_home, wdir);
+*/
 
 		return 0;
 	}else{

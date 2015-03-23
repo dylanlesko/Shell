@@ -3,6 +3,9 @@
 #include <string.h>
 #include "list.h"
 #include "util.h"
+#include "defs.h"
+
+extern char dir_home[MEM_MAX];
 
 
 int our_exit(char args[50][2048]){
@@ -14,7 +17,11 @@ int our_exit(char args[50][2048]){
 }
 
 int our_cd(char dir[50][2048]){
-	if(dir==NULL){
+
+	char Null[2048];
+	memset(Null,'\0',2048);
+	if(strcmp(dir[0],Null) == 0){
+		chdir(dir_home);	
 		return 0;
 	}
 
