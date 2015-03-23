@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "defs.h"
 #include "types.h"
 #include "list.h"
@@ -109,11 +110,25 @@ int shell_cmd_in(LL **head)
 	if ( cmd_line[ln] == '\n' )
 		cmd_line[ln] = '\0';
 
-	//shell_tok( cmd_line, list );
+	// if the entire string doesn't have any alpha numerics, then just print another prompt
 
-	newTok(cmd_line,head); // head should now have a list of commands
-	execute(*head);
-	//destroy(*head);
+	int i,alNumFlag; alNumFlag = 0; // 1 means there are alnums, 0 means no alnums
+	for(i = 0; i < strlen(cmd_line); i++) {
+		if(isalnum(cmd_line[i]))
+			alNumFlag = 1;
+	}
+
+		
+	if(alNumFlag == 1) {	
+	
+		//shell_tok( cmd_line, list );
+	
+		newTok(cmd_line,head); // head should now have a list of commands
+		execute(*head);
+		//destroy(*head);
+	} else if(alNumFlag == 0) {
+		printf("");
+	}
 
 
 

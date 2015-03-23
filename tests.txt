@@ -1,9 +1,6 @@
 Testing:
-	1) Get another prompt, but "No such file or directory" is output
-	2) Spaces and tabs get output, then "No such file or directory" is output, then we get the prompt again
-	3) Pass
-	4) Pass
-	5) I think it passes, but the description and example don't match in the Guidelines for Testing
+	1) Pass
+	2) Pass
 	6) Pass
 	7) Pass
 	8) Pass
